@@ -1,23 +1,33 @@
 // ═══════════════════════════════════
 //  Navigation
 // ═══════════════════════════════════
+function switchToPage(page) {
+  document.querySelectorAll(".nav button").forEach((b) => b.classList.remove("active"));
+  document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
+  const btn = document.querySelector(`.nav button[data-page="${page}"]`);
+  if (!btn) return;
+  btn.classList.add("active");
+  document.getElementById("page-" + page).classList.add("active");
+  if (page === "cookies") loadCookies();
+  if (page === "redirects") loadRedirects();
+  if (page === "darkmode") loadDarkMode();
+  if (page === "xdim") loadXDim();
+  if (page === "jstoggle") loadJsToggle();
+  if (page === "nocookie") loadNoCookie();
+  if (page === "livecss") loadLiveCSS();
+  if (page === "unhook") loadUnhook();
+  if (page === "jsonformat") loadJsonFormat();
+  if (page === "music") { loadMusicHistory(); loadAcrFields(); }
+  chrome.storage.local.set({ last_tab: page });
+}
+
 document.querySelectorAll(".nav button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".nav button").forEach((b) => b.classList.remove("active"));
-    document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById("page-" + btn.dataset.page).classList.add("active");
-    if (btn.dataset.page === "cookies") loadCookies();
-    if (btn.dataset.page === "redirects") loadRedirects();
-    if (btn.dataset.page === "darkmode") loadDarkMode();
-    if (btn.dataset.page === "xdim") loadXDim();
-    if (btn.dataset.page === "jstoggle") loadJsToggle();
-    if (btn.dataset.page === "nocookie") loadNoCookie();
-    if (btn.dataset.page === "livecss") loadLiveCSS();
-    if (btn.dataset.page === "unhook") loadUnhook();
-    if (btn.dataset.page === "jsonformat") loadJsonFormat();
-    if (btn.dataset.page === "music") { loadMusicHistory(); loadAcrFields(); }
-  });
+  btn.addEventListener("click", () => switchToPage(btn.dataset.page));
+});
+
+// Restore last open tab
+chrome.storage.local.get(["last_tab"], (data) => {
+  if (data.last_tab) switchToPage(data.last_tab);
 });
 
 // ═══════════════════════════════════
