@@ -16,6 +16,7 @@ function switchToPage(page) {
   if (page === "nocookie") loadNoCookie();
   if (page === "livecss") loadLiveCSS();
   if (page === "unhook") loadUnhook();
+  if (page === "xunhook") loadXUnhook();
   if (page === "jsonformat") loadJsonFormat();
   if (page === "music") { loadMusicHistory(); loadAcrFields(); }
   chrome.storage.local.set({ last_tab: page });
@@ -733,6 +734,35 @@ unhookToggle.addEventListener("change", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab) {
     chrome.tabs.sendMessage(tab.id, { type: "unhook_toggle", enabled }).catch(() => {});
+  }
+});
+
+// ═══════════════════════════════════
+//  X Unhook
+// ═══════════════════════════════════
+const xunhookToggle = document.getElementById("xunhookToggle");
+const xunhookStatus = document.getElementById("xunhookStatus");
+
+async function loadXUnhook() {
+  const data = await chrome.storage.local.get(["xunhook_enabled"]);
+  const enabled = data.xunhook_enabled !== false;
+  xunhookToggle.checked = enabled;
+  updateXUnhookUI(enabled);
+}
+
+function updateXUnhookUI(on) {
+  xunhookStatus.textContent = on ? "ON" : "OFF";
+  xunhookStatus.className = "status " + (on ? "on" : "off");
+}
+
+xunhookToggle.addEventListener("change", async () => {
+  const enabled = xunhookToggle.checked;
+  updateXUnhookUI(enabled);
+  await chrome.storage.local.set({ xunhook_enabled: enabled });
+
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (tab) {
+    chrome.tabs.sendMessage(tab.id, { type: "xunhook_toggle", enabled }).catch(() => {});
   }
 });
 

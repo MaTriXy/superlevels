@@ -24,7 +24,7 @@
       flex-shrink: 0;
     }
     .nav button {
-      width: calc(100% / 6);
+      width: calc(100% / 7);
       padding: 9px 2px;
       background: none;
       border: none;
@@ -736,10 +736,11 @@
     <button data-page="redirects">🔀 Redirects</button>
     <button data-page="darkmode">🌙 Dark</button>
     <button data-page="xdim">𝕏 Dim</button>
+    <button data-page="xunhook">𝕏 Unhook</button>
     <button data-page="jstoggle">⚡ JS</button>
     <button data-page="nocookie">🚫 GDPR</button>
     <button data-page="livecss">🎨 CSS</button>
-    <button data-page="unhook">📺 YT</button>
+    <button data-page="unhook">📺 YT Unhook</button>
     <button data-page="music">🎵 Music</button>
     <button data-page="pip">🖼 PiP</button>
     <button data-page="jsonformat">{} JSON</button>
@@ -892,6 +893,32 @@
       <div class="xdim-note">
         Applies a custom dim theme to X / Twitter.<br>
         Choose a theme or set a custom hue for less eye strain.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ X Unhook Page ═══ -->
+  <div class="page" id="page-xunhook">
+    <div class="page-body">
+      <div class="unhook-big-toggle">
+        <div class="yticon" style="font-weight:800;font-family:-apple-system,sans-serif;">𝕏</div>
+        <label class="big-switch">
+          <input type="checkbox" id="xunhookToggle" checked>
+          <span class="big-slider"></span>
+        </label>
+        <div class="status on" id="xunhookStatus">ON</div>
+      </div>
+
+      <div class="unhook-features">
+        <div class="unhook-feature"><span class="check">✓</span> Hide sidebar panels (Trends, News, Live on X)</div>
+        <div class="unhook-feature"><span class="check">✓</span> Keep search bar at top of sidebar</div>
+        <div class="unhook-feature"><span class="check">✓</span> Hide Explore tab in left nav</div>
+        <div class="unhook-feature"><span class="check">✓</span> Hide Explore in More overflow menu</div>
+      </div>
+
+      <div class="xdim-note" style="margin-top:10px">
+        Removes X / Twitter distractions.<br>
+        Toggle off if a page breaks.
       </div>
     </div>
   </div>
